@@ -1,3 +1,3 @@
-# BrainF*ck Interpretter
+# BrainF*ck Interpreter
 
-This is a very simple implementation of a BF Interpretter in C++. Simply a little toy project for myself as something fun to write.
+This is a very simple implementation of a BF Interpreter in C++. Simply a little toy project for myself as something fun to write.
