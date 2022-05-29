@@ -29,14 +29,14 @@ void BFMachine::reset()
     this->dataIndex = 0;
     this->programIndex = 0;
     this->program = nullptr;
-    this->error = RETURN_SUCCESS;
+    this->error = BF_RETURN_SUCCESS;
 }
 
 int BFMachine::execute()
 {
     if(!this->program)
-        return RETURN_SUCCESS;
-    while(this->error == RETURN_SUCCESS && program[programIndex] != '\0')
+        return BF_RETURN_SUCCESS;
+    while(this->error == BF_RETURN_SUCCESS && program[programIndex] != '\0')
     {
         unsigned char command = program[programIndex];
         switch(command)
@@ -56,7 +56,7 @@ int BFMachine::execute()
                         programIndex++;
                         if(program[programIndex] == '\0')
                         {
-                            this->error = RETURN_INVALID_INSTRUCTION;
+                            this->error = BF_RETURN_INVALID_INSTRUCTION;
                             break;
                         }
                         if(program[programIndex] == '[')
@@ -74,7 +74,7 @@ int BFMachine::execute()
                     {
                         if(programIndex == 0)
                         {
-                            this->error = RETURN_INVALID_INSTRUCTION;
+                            this->error = BF_RETURN_INVALID_INSTRUCTION;
                             break;
                         }
                         programIndex--;
@@ -108,7 +108,7 @@ void BFMachine::incrementDataPointer()
     this->dataIndex++;
     if(this->dataIndex >= MAX_MEMORY_SIZE)
     {
-        this->error = RETURN_INVALID_MEMORY_ADDRESS;
+        this->error = BF_RETURN_INVALID_MEMORY_ADDRESS;
     }
 }
 
@@ -116,7 +116,7 @@ void BFMachine::decrementDataPointer()
 {
     if(this->dataIndex == 0)
     {
-        this->error = RETURN_INVALID_MEMORY_ADDRESS;
+        this->error = BF_RETURN_INVALID_MEMORY_ADDRESS;
         return;
     }
     this->dataIndex--;
@@ -131,6 +131,6 @@ void BFMachine::printByte()
 void BFMachine::readByte()
 {
     unsigned char c;
-    std::cin >> c;
+    std::cin.read(reinterpret_cast<char *>(&c), 1);
     this->memory[this->dataIndex] = reinterpret_cast<uint8_t>(c);
 }
